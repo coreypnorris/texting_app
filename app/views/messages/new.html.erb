@@ -2,7 +2,7 @@
 
 <%= render("layouts/errors", :object => @message) %>
 
-<%= form_for [current_user, @message ] do |f| %>
+<%= form_for [current_user, @message], :html => {:multipart => true} do |f| %>
   <div class="form-group">
     <%= f.label :from %></br>
     <%= f.text_field :from %>
@@ -39,7 +39,10 @@
     <%= text_field_tag :name %>
   </div>
 
-
+  <div>
+    <%= f.label :image_url %>
+    <%= f.text_field :image_url %>
+  </div>
 
 
   <%= f.submit(:class => "btn btn-default") %>

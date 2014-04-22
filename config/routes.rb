@@ -7,6 +7,7 @@ TextingApp::Application.routes.draw do
   end
 
   resources :welcome, :only => :index
+  resources :inbound_messages
 
   authenticated :user do
     root :to => 'users#show', as: :authenticated_root

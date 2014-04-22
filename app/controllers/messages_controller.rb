@@ -6,14 +6,20 @@ class MessagesController < ApplicationController
 
   def create
     nums = params["multi"]
-    nums.each do |num|
-      @message = Message.new(:from => params["message"]["from"], :body => params["message"]["body"], :to => num.last)
-      if @message.save
-        current_user.messages << @message
-        if params[:save_contact] == '1' && !current_user.contacts.any? {|c| c.phone == params[:message][:to]}
-          current_user.contacts.create(:phone => params[:message][:to], :name => params[:name])
+    if nums != nil
+      nums.each do |num|
+        @message = Message.new(:from => params["message"]["from"], :body => params["message"]["body"], :to => num.last)
+        if @message.save
+          current_user.messages << @message
+          if params[:save_contact] == '1' && !current_user.contacts.any? {|c| c.phone == params[:message][:to]}
+            current_user.contacts.create(:phone => params[:message][:to], :name => params[:name])
+          end
         end
       end
+    else
+      @message = Message.new(message_params)
+      current_user.messages << @message
+      @message.save
     end
     flash[:notice] = "Message(s) Sent!"
     redirect_to root_url
@@ -25,6 +31,6 @@ class MessagesController < ApplicationController
 
 private
   def message_params
-    params.require(:message).permit(:to, :from, :body, :status, :image)
+    params.require(:message).permit(:to, :from, :body, :status)
   end
 end
