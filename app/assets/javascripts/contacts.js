@@ -3,7 +3,7 @@ function initialize(){
     $('#name_form').toggle();
   })
   $('#contact-btn').click(function() {
-    $('#contacts-dropdown').toggle();
+    $('#contacts-checkbox').toggle();
     $('#to-field').toggle();
     $('#save-check').toggle();
     $(this).text(function(i, text){
