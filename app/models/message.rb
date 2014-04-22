@@ -3,6 +3,11 @@ class Message < ActiveRecord::Base
   validates :from, presence: true
   validates :body, presence: true
 
+  has_attached_file :image, styles: { medium: "200x200" }
+
+  validates_attachment_content_type :image, :content_type =>
+  ["image/jpg", "image/jpeg", "image/png"]
+
   has_and_belongs_to_many :contacts
   belongs_to :user
 
